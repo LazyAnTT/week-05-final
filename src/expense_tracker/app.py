@@ -11,6 +11,7 @@ from logic import (
     get_available_months,
     sum_by_category,
 )
+from export import export_to_csv
 from storage import load_expenses, save_expenses
 from ui_text import UI, CATEGORY_LABELS, LANG_SELECTION
 
@@ -298,6 +299,27 @@ def delete_expense_ui(ui, language):
         print(ui["delete_error"])
 
 
+def export_csv_ui(ui):
+    """Load fresh data and export expenses to a CSV file."""
+    expenses = load_expenses()
+
+    default_filename = ui["export_default_filename"]
+
+    user_input = input(f"{ui['export_prompt']} [{default_filename}]: ").strip()
+
+    if user_input == "":
+        filename = default_filename
+    else:
+        filename = user_input
+
+    if not filename.lower().endswith(".csv"):
+        filename += ".csv"
+
+    export_to_csv(expenses, filename)
+
+    print(f"{ui['export_success']}: {len(expenses)} -> {filename}")
+
+
 def handle_choice(choice, ui, language):
     """Execute action based on menu choice."""
     if choice == "1":
@@ -318,6 +340,10 @@ def handle_choice(choice, ui, language):
 
     if choice == "5":
         delete_expense_ui(ui, language)
+        return
+
+    if choice == "6":
+        export_csv_ui(ui)
         return True
 
     if choice == "7":
