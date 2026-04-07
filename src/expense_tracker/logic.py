@@ -54,3 +54,26 @@ def sum_total(expenses):
         total += expense["amount"]
 
     return round(total, 2)
+
+
+def filter_by_month(expenses, year, month):
+    """Return only expenses that belong to the given year and month."""
+    filtered_expenses = []
+
+    for expense in expenses:
+        expense_date = datetime.strptime(expense["date"], "%Y-%m-%d")
+
+        if expense_date.year == year and expense_date.month == month:
+            filtered_expenses.append(expense)
+    return filtered_expenses
+
+
+def get_available_months(expenses):
+    """Return sorted unique months in YYYY-MM format."""
+    months = set()
+
+    for expense in expenses:
+        expense_date = datetime.strptime(expense["date"], "%Y-%m-%d")
+        months.add(expense_date.strftime("%Y-%m"))
+
+    return sorted(months)
