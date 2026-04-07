@@ -57,10 +57,14 @@ Planned functions:
 3. expense_tracker/logic.py
 Planned functions:
 
+- is_valid_date(text) — validates date format
+- parse_amount(text) — validates and converts amount
+- get_category_by_choice(choice, categories) — returns selected category key
+- build_expense(expense_date, amount, category, description) — creates one expense record
 - sum_total(expenses) — returns total sum of given expenses
 - filter_by_month(expenses, year, month) — returns only expenses from selected month
-- sum_by_category(expenses) — returns dictionary with totals grouped by category
-- get_available_months(expenses) — returns unique list of available months 
+- sum_by_category(expenses) — returns totals grouped by category
+- get_available_months(expenses) — returns unique list of available months
 
 4. expense_tracker/export.py
 
