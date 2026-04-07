@@ -229,6 +229,75 @@ def show_category_summary_ui(ui, language):
     print(f"{ui['total_label']}: {sum_total(expenses):.2f} EUR")
 
 
+def delete_expense_ui(ui, language):
+    """Load fresh data, show expenses with temporary numbers, and delete one item."""
+    expenses = load_expenses()
+
+    if not expenses:
+        print(f"\n{ui['no_expenses']}")
+        return
+
+    headers = ui["table_headers"]
+
+    print()
+    print(
+        f"{ui['expense_number_header']:<4} "
+        f"{headers[0]:<12} "
+        f"{headers[1]:>10} "
+        f"{headers[2]:<22} "
+        f"{headers[3]}"
+    )
+    print("-" * UI_LENGTH)
+
+    for index, expense in enumerate(expenses, start=1):
+        category_label = CATEGORY_LABELS[language].get(
+            expense["category"], expense["category"]
+        )
+
+        print(
+            f"{index:<4} "
+            f"{expense['date']:<12} "
+            f"{expense['amount']:>8.2f} EUR "
+            f"{category_label:<22} "
+            f"{expense['description']}"
+        )
+
+    print("-" * UI_LENGTH)
+
+    while True:
+        user_input = input(f"{ui['delete_prompt']}: ").strip()
+
+        if not user_input.isdigit():
+            print(ui["delete_error"])
+            continue
+
+        selected_index = int(user_input)
+
+        if selected_index == 0:
+            print(ui["delete_cancelled"])
+            return
+
+        if 1 <= selected_index <= len(expenses):
+            deleted_expense = expenses.pop(selected_index - 1)
+            save_expenses(expenses)
+
+            category_label = CATEGORY_LABELS[language].get(
+                deleted_expense["category"],
+                deleted_expense["category"],
+            )
+
+            print(
+                f"{ui['delete_success']}: "
+                f"{deleted_expense['date']} | "
+                f"{category_label} | "
+                f"{deleted_expense['amount']:.2f} EUR | "
+                f"{deleted_expense['description']}"
+            )
+            return
+
+        print(ui["delete_error"])
+
+
 def handle_choice(choice, ui, language):
     """Execute action based on menu choice."""
     if choice == "1":
@@ -245,6 +314,10 @@ def handle_choice(choice, ui, language):
 
     if choice == "4":
         show_category_summary_ui(ui, language)
+        return True
+
+    if choice == "5":
+        delete_expense_ui(ui, language)
         return True
 
     if choice == "7":
