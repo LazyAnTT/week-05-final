@@ -9,6 +9,7 @@ from logic import (
     sum_total,
     filter_by_month,
     get_available_months,
+    sum_by_category,
 )
 from storage import load_expenses, save_expenses
 from ui_text import UI, CATEGORY_LABELS, LANG_SELECTION
@@ -206,6 +207,28 @@ def filter_expenses_ui(ui, language):
     show_expenses_list(filtered_expenses, ui, language)
 
 
+def show_category_summary_ui(ui, language):
+    """Show totals grouped by category."""
+    expenses = load_expenses()
+
+    if not expenses:
+        print(f"\n{ui['no_expenses']}")
+        return
+
+    category_totals = sum_by_category(expenses)
+
+    print(f"\n{ui['category_summary_label']}:")
+    print("-" * UI_LENGTH)
+
+    for category_key, total in category_totals.items():
+        category_label = CATEGORY_LABELS[language].get(category_key, category_key)
+
+        print(f"{category_label:<22} {total:>8.2f} EUR")
+
+    print("-" * UI_LENGTH)
+    print(f"{ui['total_label']}: {sum_total(expenses):.2f} EUR")
+
+
 def handle_choice(choice, ui, language):
     """Execute action based on menu choice."""
     if choice == "1":
@@ -218,6 +241,10 @@ def handle_choice(choice, ui, language):
 
     if choice == "3":
         filter_expenses_ui(ui, language)
+        return True
+
+    if choice == "4":
+        show_category_summary_ui(ui, language)
         return True
 
     if choice == "7":

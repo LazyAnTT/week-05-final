@@ -77,3 +77,14 @@ def get_available_months(expenses):
         months.add(expense_date.strftime("%Y-%m"))
 
     return sorted(months)
+
+
+def sum_by_category(expenses):
+    """Return totals grouped by category key."""
+    totals = {}
+
+    for expense in expenses:
+        category = expense["category"]
+        totals[category] = totals.get(category, 0) + expense["amount"]
+
+    return {category: round(total, 2) for category, total in totals.items()}

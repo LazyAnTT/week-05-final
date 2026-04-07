@@ -8,6 +8,7 @@ from src.expense_tracker.logic import (
     sum_total,
     filter_by_month,
     get_available_months,
+    sum_by_category,
 )
 
 
@@ -162,6 +163,78 @@ class TestLogic(unittest.TestCase):
 
     def test_get_available_months_returns_empty_list_for_no_expenses(self):
         self.assertEqual(get_available_months([]), [])
+
+    def test_sum_by_category_returns_empty_dict_for_no_expenses(self):
+        self.assertEqual(sum_by_category([]), {})
+
+    def test_sum_by_category_returns_single_category_total(self):
+        expenses = [
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 7.50,
+                "category": "food",
+                "description": "Dinner",
+            },
+        ]
+
+        result = sum_by_category(expenses)
+
+        self.assertEqual(result, {"food": 20.00})
+
+    def test_sum_by_category_groups_multiple_categories(self):
+        expenses = [
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 3.40,
+                "category": "transport",
+                "description": "Bus",
+            },
+            {
+                "date": "2025-02-17",
+                "amount": 7.50,
+                "category": "food",
+                "description": "Dinner",
+            },
+        ]
+
+        result = sum_by_category(expenses)
+
+        expected = {
+            "food": 20.00,
+            "transport": 3.40,
+        }
+
+        self.assertEqual(result, expected)
+
+    def test_sum_by_category_rounds_result_to_two_decimals(self):
+        expenses = [
+            {
+                "date": "2025-02-15",
+                "amount": 1.111,
+                "category": "food",
+                "description": "A",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 2.222,
+                "category": "food",
+                "description": "B",
+            },
+        ]
+
+        result = sum_by_category(expenses)
 
 
 if __name__ == "__main__":
