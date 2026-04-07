@@ -1,0 +1,104 @@
+LANG_SELECTION = {
+    "title": {
+        "en": "Choose language",
+        "lv": "Izvēlies valodu",
+    },
+    "prompt": {
+        "en": "Select language",
+        "lv": "Izvēlies valodu",
+    },
+    "error": {
+        "en": "Error: choose 1 or 2.",
+        "lv": "Kļūda: izvēlies 1 vai 2.",
+    },
+    "options": {
+        "1": {"en": "English", "lv": "English"},
+        "2": {"en": "Latviešu", "lv": "Latviešu"},
+    },
+}
+
+UI = {
+    "en": {
+        "title": "Expense Tracker",
+        "language_title": "Choose language",
+        "language_prompt": "Select language",
+        "language_options": {
+            "1": "English",
+            "2": "Latviešu",
+        },
+        "invalid_language": "Error: choose 1 or 2.",
+        "menu_prompt": "Choose an action",
+        "invalid_choice": "Error: choose 1, 2, or 7.",
+        "goodbye": "Goodbye!",
+        "commands": {
+            "1": "Add expense",
+            "2": "Show expenses",
+            "7": "Exit",
+        },
+        "date_prompt": "Date (YYYY-MM-DD)",
+        "date_error": "Error: enter a valid date in YYYY-MM-DD format.",
+        "category_label": "Category:",
+        "category_prompt": "Choose category",
+        "category_error": "Error: choose a valid category number.",
+        "amount_prompt": "Amount (EUR)",
+        "amount_error": "Error: enter a positive number, for example 12.50.",
+        "description_prompt": "Description",
+        "added_label": "Added",
+        "no_expenses": "No expenses found.",
+        "table_headers": ["Date", "Amount", "Category", "Description"],
+        "total_label": "Total",
+        "records_label": "records",
+    },
+    "lv": {
+        "title": "Izdevumu izsekotājs",
+        "language_title": "Izvēlies valodu",
+        "language_prompt": "Izvēlies valodu",
+        "language_options": {
+            "1": "English",
+            "2": "Latviešu",
+        },
+        "invalid_language": "Kļūda: izvēlies 1 vai 2.",
+        "menu_prompt": "Izvēlies darbību",
+        "invalid_choice": "Kļūda: izvēlies 1, 2 vai 7.",
+        "goodbye": "Uz redzēšanos!",
+        "commands": {
+            "1": "Pievienot izdevumu",
+            "2": "Parādīt izdevumus",
+            "7": "Iziet",
+        },
+        "date_prompt": "Datums (YYYY-MM-DD)",
+        "date_error": "Kļūda: ievadi datumu formātā YYYY-MM-DD.",
+        "category_label": "Kategorija:",
+        "category_prompt": "Izvēlies kategoriju",
+        "category_error": "Kļūda: izvēlies derīgu kategorijas numuru.",
+        "amount_prompt": "Summa (EUR)",
+        "amount_error": "Kļūda: ievadi pozitīvu skaitli, piemēram, 12.50.",
+        "description_prompt": "Apraksts",
+        "added_label": "Pievienots",
+        "no_expenses": "Nav izdevumu.",
+        "table_headers": ["Datums", "Summa", "Kategorija", "Apraksts"],
+        "total_label": "Kopā",
+        "records_label": "ieraksti",
+    },
+}
+
+CATEGORY_LABELS = {
+    "en": {
+        "food": "Food",
+        "transport": "Transport",
+        "entertainment": "Entertainment",
+        "utilities": "Utilities",
+        "health": "Health",
+        "shopping": "Shopping",
+        "other": "Other",
+    },
+    "lv": {
+        "food": "Ēdiens",
+        "transport": "Transports",
+        "entertainment": "Izklaide",
+        "utilities": "Komunālie maksājumi",
+        "health": "Veselība",
+        "shopping": "Iepirkšanās",
+        "other": "Cits",
+    },
+}
