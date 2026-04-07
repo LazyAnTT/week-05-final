@@ -84,9 +84,9 @@ UI = {
         "table_headers": ["Datums", "Summa", "Kategorija", "Apraksts"],
         "total_label": "Kopā",
         "records_label": "ieraksti",
-        "available_months_label": "Available months",
-        "choose_month_prompt": "Choose month",
-        "no_months": "No months available.",
+        "available_months_label": "Pieejamie mēneši",
+        "choose_month_prompt": "Izvēlies mēnesi",
+        "no_months": "Nav pieejamu mēnešu.",
     },
 }
 
