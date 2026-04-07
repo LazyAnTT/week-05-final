@@ -6,6 +6,8 @@ from src.expense_tracker.logic import (
     is_valid_date,
     parse_amount,
     sum_total,
+    filter_by_month,
+    get_available_months,
 )
 
 
@@ -76,6 +78,90 @@ class TestLogic(unittest.TestCase):
 
     def test_sum_total_returns_zero_for_empty_list(self):
         self.assertEqual(sum_total([]), 0)
+
+    def test_filter_by_month_returns_only_matching_month(self):
+        expenses = [
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 3.40,
+                "category": "transport",
+                "description": "Bus",
+            },
+            {
+                "date": "2025-03-01",
+                "amount": 20.00,
+                "category": "shopping",
+                "description": "Book",
+            },
+        ]
+
+        result = filter_by_month(expenses, 2025, 2)
+
+        expected = [
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 3.40,
+                "category": "transport",
+                "description": "Bus",
+            },
+        ]
+
+        self.assertEqual(result, expected)
+
+    def test_filter_by_month_returns_empty_list_when_no_matches(self):
+        expenses = [
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            }
+        ]
+
+        result = filter_by_month(expenses, 2025, 3)
+
+        self.assertEqual(result, [])
+
+    def test_get_available_months_returns_sorted_unique_months(self):
+        expenses = [
+            {
+                "date": "2025-03-01",
+                "amount": 20.00,
+                "category": "shopping",
+                "description": "Book",
+            },
+            {
+                "date": "2025-02-15",
+                "amount": 12.50,
+                "category": "food",
+                "description": "Lunch",
+            },
+            {
+                "date": "2025-02-16",
+                "amount": 3.40,
+                "category": "transport",
+                "description": "Bus",
+            },
+        ]
+
+        result = get_available_months(expenses)
+
+        self.assertEqual(result, ["2025-02", "2025-03"])
+
+    def test_get_available_months_returns_empty_list_for_no_expenses(self):
+        self.assertEqual(get_available_months([]), [])
 
 
 if __name__ == "__main__":
