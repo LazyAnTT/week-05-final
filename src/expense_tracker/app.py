@@ -7,6 +7,8 @@ from logic import (
     is_valid_date,
     parse_amount,
     sum_total,
+    filter_by_month,
+    get_available_months,
 )
 from storage import load_expenses, save_expenses
 from ui_text import UI, CATEGORY_LABELS, LANG_SELECTION
@@ -126,10 +128,8 @@ def add_expense_ui(ui, language):
     )
 
 
-def show_expenses_ui(ui, language):
-    """Load fresh data and display all expenses in a formatted table."""
-    expenses = load_expenses()
-
+def show_expenses_list(expenses, ui, language):
+    """Display a given list of expenses in a formatted table."""
     if not expenses:
         print(f"\n{ui['no_expenses']}")
         return
@@ -154,8 +154,56 @@ def show_expenses_ui(ui, language):
 
     print("-" * UI_LENGTH)
     print(
-        f"{ui['total_label']}: {sum_total(expenses):.2f} EUR ({len(expenses)} {ui['records_label']})"
+        f"{ui['total_label']}: {sum_total(expenses):.2f} EUR "
+        f"({len(expenses)} {ui['records_label']})"
     )
+
+
+def show_expenses_ui(ui, language):
+    """Load fresh data and display all expenses in a formatted table."""
+    expenses = load_expenses()
+    show_expenses_list(expenses, ui, language)
+
+
+def prompt_month_choice(ui, months):
+    """Ask the user to choose one month from the available list."""
+    while True:
+        user_input = input(f"{ui['choose_month_prompt']} (1-{len(months)}): ").strip()
+
+        if not user_input.isdigit():
+            print(ui["invalid_choice"])
+            continue
+
+        month_index = int(user_input)
+
+        if 1 <= month_index <= len(months):
+            return months[month_index - 1]
+
+        print(ui["invalid_choice"])
+
+
+def filter_expenses_ui(ui, language):
+    """Load expenses, let the user choose a month, and show filtered results."""
+    expenses = load_expenses()
+    months = get_available_months(expenses)
+
+    if not months:
+        print(f"\n{ui['no_months']}")
+        return
+
+    print(f"\n{ui['available_months_label']}:")
+    for index, month in enumerate(months, start=1):
+        print(f"{index}) {month}")
+
+    selected_month = prompt_month_choice(ui, months)
+    year_text, month_text = selected_month.split("-")
+
+    filtered_expenses = filter_by_month(
+        expenses,
+        year=int(year_text),
+        month=int(month_text),
+    )
+    show_expenses_list(filtered_expenses, ui, language)
 
 
 def handle_choice(choice, ui, language):
@@ -166,6 +214,10 @@ def handle_choice(choice, ui, language):
 
     if choice == "2":
         show_expenses_ui(ui, language)
+        return True
+
+    if choice == "3":
+        filter_expenses_ui(ui, language)
         return True
 
     if choice == "7":

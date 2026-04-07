@@ -33,6 +33,7 @@ UI = {
         "commands": {
             "1": "Add expense",
             "2": "Show expenses",
+            "3": "Filter by month",
             "7": "Exit",
         },
         "date_prompt": "Date (YYYY-MM-DD)",
@@ -48,6 +49,9 @@ UI = {
         "table_headers": ["Date", "Amount", "Category", "Description"],
         "total_label": "Total",
         "records_label": "records",
+        "available_months_label": "Available months",
+        "choose_month_prompt": "Choose month",
+        "no_months": "No months available.",
     },
     "lv": {
         "title": "Izdevumu izsekotājs",
@@ -64,6 +68,7 @@ UI = {
         "commands": {
             "1": "Pievienot izdevumu",
             "2": "Parādīt izdevumus",
+            "3": "Filtrēt pēc mēneša",
             "7": "Iziet",
         },
         "date_prompt": "Datums (YYYY-MM-DD)",
@@ -79,6 +84,9 @@ UI = {
         "table_headers": ["Datums", "Summa", "Kategorija", "Apraksts"],
         "total_label": "Kopā",
         "records_label": "ieraksti",
+        "available_months_label": "Available months",
+        "choose_month_prompt": "Choose month",
+        "no_months": "No months available.",
     },
 }
 
