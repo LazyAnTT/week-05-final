@@ -20,6 +20,8 @@ Programma darbojas interaktīvā režīmā ar izvēlni:
 6) Export CSV
 7) Exit
 
+For testing:
+python -m unittest discover -s src/expense_tracker/tests
 
 ## Author
 R.Grūbe — Programmēšanas pamati, 2025
