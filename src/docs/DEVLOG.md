@@ -20,3 +20,7 @@ Resolved JSON persistence issue:
 
 removed global in-memory state
 ensured fresh data load on each action (read-before-write pattern)
+
+# 3. Discovered bugs and requested feature changes after testing
+- amount should accept ',' and negative numbers
+- 

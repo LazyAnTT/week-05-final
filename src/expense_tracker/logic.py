@@ -13,14 +13,15 @@ def is_valid_date(text):
 def parse_amount(text):
     """Convert text to a positive float rounded to 2 decimals, or return None."""
     try:
-        amount = float(text)
+        normalized_text = text.replace(",", ".").strip()
+        amount = float(normalized_text)
     except ValueError:
         return None
 
-    if amount <= 0:
+    if amount == 0:
         return None
 
-    return round(amount, 2)
+    return round(abs(amount), 2)
 
 
 def get_category_by_choice(choice, categories):

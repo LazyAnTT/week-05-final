@@ -25,11 +25,14 @@ class TestLogic(unittest.TestCase):
     def test_parse_amount_returns_float_for_valid_input(self):
         self.assertEqual(parse_amount("12.50"), 12.50)
 
+    def test_parse_amount_accepts_comma(self):
+        self.assertEqual(parse_amount("12,50"), 12.50)
+
     def test_parse_amount_returns_none_for_text(self):
         self.assertIsNone(parse_amount("abc"))
 
-    def test_parse_amount_returns_none_for_negative_number(self):
-        self.assertIsNone(parse_amount("-5"))
+    def test_parse_amount_converts_negative_to_positive(self):
+        self.assertEqual(parse_amount("-5"), 5.0)
 
     def test_parse_amount_returns_none_for_zero(self):
         self.assertIsNone(parse_amount("0"))
