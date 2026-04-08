@@ -10,6 +10,7 @@ from logic import (
     filter_by_month,
     get_available_months,
     sum_by_category,
+    format_choice_error,
 )
 from export import export_to_csv
 from storage import load_expenses, save_expenses
@@ -169,11 +170,13 @@ def show_expenses_ui(ui, language):
 
 def prompt_month_choice(ui, months):
     """Ask the user to choose one month from the available list."""
+    valid_choices = [str(index) for index in range(1, len(months) + 1)]
+
     while True:
         user_input = input(f"{ui['choose_month_prompt']} (1-{len(months)}): ").strip()
 
         if not user_input.isdigit():
-            print(ui["invalid_choice"])
+            print(format_choice_error(ui, valid_choices))
             continue
 
         month_index = int(user_input)
@@ -181,7 +184,7 @@ def prompt_month_choice(ui, months):
         if 1 <= month_index <= len(months):
             return months[month_index - 1]
 
-        print(ui["invalid_choice"])
+        print(format_choice_error(ui, valid_choices))
 
 
 def filter_expenses_ui(ui, language):
@@ -322,6 +325,7 @@ def export_csv_ui(ui):
 
 def handle_choice(choice, ui, language):
     """Execute action based on menu choice."""
+
     if choice == "1":
         add_expense_ui(ui, language)
         return True
@@ -350,7 +354,8 @@ def handle_choice(choice, ui, language):
         print(ui["goodbye"])
         return False
 
-    print(ui["invalid_choice"])
+    valid_choices = list(ui["commands"].keys())
+    print(format_choice_error(ui, valid_choices))
     return True
 
 

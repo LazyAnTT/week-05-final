@@ -28,7 +28,7 @@ UI = {
         },
         "invalid_language": "Error: choose 1 or 2.",
         "menu_prompt": "Choose an action",
-        "invalid_choice": "Error: choose 1, 2, or 7.",
+        "invalid_choice_prefix": "Error: choose",
         "goodbye": "Goodbye!",
         "commands": {
             "1": "Add expense",
@@ -75,7 +75,8 @@ UI = {
         },
         "invalid_language": "Kļūda: izvēlies 1 vai 2.",
         "menu_prompt": "Izvēlies darbību",
-        "invalid_choice": "Kļūda: izvēlies 1, 2 vai 7.",
+        "invalid_choice_prefix": "Kļūda: izvēlies",
+        "or_word": "vai",
         "goodbye": "Uz redzēšanos!",
         "commands": {
             "1": "Pievienot izdevumu",

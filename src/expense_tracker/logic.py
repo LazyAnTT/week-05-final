@@ -89,3 +89,21 @@ def sum_by_category(expenses):
         totals[category] = totals.get(category, 0) + expense["amount"]
 
     return {category: round(total, 2) for category, total in totals.items()}
+
+
+def format_choice_error(ui, valid_choices):
+    """Return a localized invalid choice message from a list of valid choices."""
+    if len(valid_choices) == 1:
+        return f"{ui['invalid_choice_prefix']} {valid_choices[0]}."
+
+    if len(valid_choices) == 2:
+        return (
+            f"{ui['invalid_choice_prefix']} "
+            f"{valid_choices[0]} {ui['or_word']} {valid_choices[1]}."
+        )
+
+    choices_text = ", ".join(valid_choices[:-1])
+    return (
+        f"{ui['invalid_choice_prefix']} "
+        f"{choices_text} {ui['or_word']} {valid_choices[-1]}."
+    )

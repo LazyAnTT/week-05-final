@@ -9,6 +9,7 @@ from src.expense_tracker.logic import (
     filter_by_month,
     get_available_months,
     sum_by_category,
+    format_choice_error,
 )
 
 
@@ -238,6 +239,46 @@ class TestLogic(unittest.TestCase):
         ]
 
         result = sum_by_category(expenses)
+
+    def test_format_choice_error_with_one_choice(self):
+        ui = {
+            "invalid_choice_prefix": "Error: choose",
+            "or_word": "or",
+        }
+
+        result = format_choice_error(ui, ["1"])
+
+        self.assertEqual(result, "Error: choose 1.")
+
+    def test_format_choice_error_with_two_choices(self):
+        ui = {
+            "invalid_choice_prefix": "Error: choose",
+            "or_word": "or",
+        }
+
+        result = format_choice_error(ui, ["1", "2"])
+
+        self.assertEqual(result, "Error: choose 1 or 2.")
+
+    def test_format_choice_error_with_three_choices(self):
+        ui = {
+            "invalid_choice_prefix": "Error: choose",
+            "or_word": "or",
+        }
+
+        result = format_choice_error(ui, ["1", "2", "3"])
+
+        self.assertEqual(result, "Error: choose 1, 2 or 3.")
+
+    def test_format_choice_error_with_latvian_text(self):
+        ui = {
+            "invalid_choice_prefix": "Kļūda: izvēlies",
+            "or_word": "vai",
+        }
+
+        result = format_choice_error(ui, ["1", "2", "3"])
+
+        self.assertEqual(result, "Kļūda: izvēlies 1, 2 vai 3.")
 
 
 if __name__ == "__main__":
