@@ -325,38 +325,40 @@ def export_csv_ui(ui):
 
 def handle_choice(choice, ui, language):
     """Execute action based on menu choice."""
+    CONTINUE = True
+    EXIT = False
 
     if choice == "1":
         add_expense_ui(ui, language)
-        return True
+        return CONTINUE
 
     if choice == "2":
         show_expenses_ui(ui, language)
-        return True
+        return CONTINUE
 
     if choice == "3":
         filter_expenses_ui(ui, language)
-        return True
+        return CONTINUE
 
     if choice == "4":
         show_category_summary_ui(ui, language)
-        return True
+        return CONTINUE
 
     if choice == "5":
         delete_expense_ui(ui, language)
-        return
+        return True
 
     if choice == "6":
         export_csv_ui(ui)
-        return True
+        return CONTINUE
 
     if choice == "7":
         print(ui["goodbye"])
-        return False
+        return EXIT
 
     valid_choices = list(ui["commands"].keys())
     print(format_choice_error(ui, valid_choices))
-    return True
+    return CONTINUE
 
 
 def main():
