@@ -25,3 +25,5 @@ ensured fresh data load on each action (read-before-write pattern)
 - amount should accept ',' and negative numbers (resolved)
 - visual defect: at expenses list ui amount is close to category(resolved)
 - use was getting incostitent suggestions for actions in case of invalid input. Created format_choice_error to properly manage this dynamically and not hardcoded as before.
+- added confirmation before deleting
+- made changes to alter inconsistencies in ui_text
