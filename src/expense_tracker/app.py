@@ -139,7 +139,7 @@ def show_expenses_list(expenses, ui, language):
     headers = ui["table_headers"]
 
     print()
-    print(f"{headers[0]:<12} {headers[1]:>10} {headers[2]:<22} {headers[3]}")
+    print(f"{headers[0]:<12} {headers[1]:<8} {headers[2]:<18} {headers[3]:<15}")
     print("-" * UI_LENGTH)
 
     for expense in expenses:
@@ -149,8 +149,8 @@ def show_expenses_list(expenses, ui, language):
 
         print(
             f"{expense['date']:<12} "
-            f"{expense['amount']:>8.2f} EUR "
-            f"{category_label:<22} "
+            f"{expense['amount']:<8.2f} EUR "
+            f"{category_label:<18} "
             f"{expense['description']}"
         )
 

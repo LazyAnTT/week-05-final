@@ -22,5 +22,5 @@ removed global in-memory state
 ensured fresh data load on each action (read-before-write pattern)
 
 # 3. Discovered bugs and requested feature changes after testing
-- amount should accept ',' and negative numbers
-- 
+- amount should accept ',' and negative numbers (resolved)
+- visual defect: at expenses list ui amount is close to category(resolved)
