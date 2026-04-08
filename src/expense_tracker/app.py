@@ -234,7 +234,7 @@ def show_category_summary_ui(ui, language):
 
 
 def delete_expense_ui(ui, language):
-    """Load fresh data, show expenses with temporary numbers, and delete one item."""
+    """Load fresh data, show expenses with numbers, confirm and delete one item."""
     expenses = load_expenses()
 
     if not expenses:
@@ -247,7 +247,7 @@ def delete_expense_ui(ui, language):
     print(
         f"{ui['expense_number_header']:<4} "
         f"{headers[0]:<12} "
-        f"{headers[1]:>10} "
+        f"{headers[1]:>12} "
         f"{headers[2]:<22} "
         f"{headers[3]}"
     )
@@ -258,10 +258,12 @@ def delete_expense_ui(ui, language):
             expense["category"], expense["category"]
         )
 
+        amount_text = f"{expense['amount']:.2f} EUR"
+
         print(
             f"{index:<4} "
             f"{expense['date']:<12} "
-            f"{expense['amount']:>8.2f} EUR "
+            f"{amount_text:>12} "
             f"{category_label:<22} "
             f"{expense['description']}"
         )
@@ -271,35 +273,63 @@ def delete_expense_ui(ui, language):
     while True:
         user_input = input(f"{ui['delete_prompt']}: ").strip()
 
+        # ❌ not a number
         if not user_input.isdigit():
             print(ui["delete_error"])
             continue
 
         selected_index = int(user_input)
 
+        # ✅ cancel
         if selected_index == 0:
             print(ui["delete_cancelled"])
             return
 
-        if 1 <= selected_index <= len(expenses):
-            deleted_expense = expenses.pop(selected_index - 1)
-            save_expenses(expenses)
+        # ❌ out of range
+        if not (1 <= selected_index <= len(expenses)):
+            print(ui["delete_error"])
+            continue
 
-            category_label = CATEGORY_LABELS[language].get(
-                deleted_expense["category"],
-                deleted_expense["category"],
-            )
+        # ✅ valid selection → ask confirmation
+        expense_to_delete = expenses[selected_index - 1]
 
-            print(
-                f"{ui['delete_success']}: "
-                f"{deleted_expense['date']} | "
-                f"{category_label} | "
-                f"{deleted_expense['amount']:.2f} EUR | "
-                f"{deleted_expense['description']}"
-            )
-            return
+        category_label = CATEGORY_LABELS[language].get(
+            expense_to_delete["category"],
+            expense_to_delete["category"],
+        )
 
-        print(ui["delete_error"])
+        print(
+            f"\n{ui['delete_confirm_message']}: "
+            f"{expense_to_delete['date']} | "
+            f"{category_label} | "
+            f"{expense_to_delete['amount']:.2f} EUR | "
+            f"{expense_to_delete['description']}"
+        )
+
+        while True:
+            confirmation = input(f"{ui['delete_confirm_prompt']}: ").strip().lower()
+
+            # ✅ confirm
+            if confirmation == ui["yes_choice"]:
+                deleted_expense = expenses.pop(selected_index - 1)
+                save_expenses(expenses)
+
+                print(
+                    f"{ui['delete_success']}: "
+                    f"{deleted_expense['date']} | "
+                    f"{category_label} | "
+                    f"{deleted_expense['amount']:.2f} EUR | "
+                    f"{deleted_expense['description']}"
+                )
+                return
+
+            # ❌ explicit no → cancel
+            if confirmation in ("n", "no"):
+                print(ui["delete_cancelled"])
+                return
+
+            # ❌ invalid confirmation → ask again
+            print(ui["delete_error"])
 
 
 def export_csv_ui(ui):
